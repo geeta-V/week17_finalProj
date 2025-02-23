@@ -48,10 +48,9 @@ jobs:
       test_data: ${{parent.jobs.prep_data.outputs.test_data}}
     outputs:
       model_output:
-        type: uri_folder
+        type: mlflow_model
     sampling_algorithm: random    # Specify the sampling algorithm
-    trial: command   # Refers to a separate command component
-    code: ../../../data-science/src  # Specify the location of the training script
+    trial: ../../../data-science/src/train.yml   # Refers to a separate command component
     command: >-
         python train.py  # The training script for each trial
         --train_data ${{inputs.train_data}}
@@ -64,13 +63,13 @@ jobs:
         values: [10, 20, 30, 50]
       max_depth:
         type: choice  # Specify the type for max_depth
-        values: [5, 10, 15, -1]  # Provide the values for max_depth
+        values: [5, 10, 15, None]  # Provide the values for max_depth
     objective:
       goal: minimize
       primary_metric: MSE
     limits:
       max_total_trials: 20
-      max_concurrent_trials: 10
+      max_concurrent_trials: 4
       timeout: 7200
 
 
