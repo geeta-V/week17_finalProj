@@ -41,7 +41,7 @@ jobs:
 
   sweep_step:
     name: hyperparameter_tuning_job
-    display_name:Hyperparameter-Tuning  # Hint: Provide the display name for the job
+    display_name: Hyperparameter-Tuning  # Hint: Provide the display name for the job
     type: sweep
     inputs:
       train_data: ${{parent.jobs.prep_data.outputs.train_data}}
