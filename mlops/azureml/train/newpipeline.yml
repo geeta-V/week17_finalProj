@@ -41,7 +41,7 @@ jobs:
 
   sweep_step:
     name: hyperparameter_tuning_job
-    display_name: Hyperparameter-Tuning # Hint: Provide the display name for the job
+    display_name:Hyperparameter-Tuning  # Hint: Provide the display name for the job
     type: sweep
     inputs:
       train_data: ${{parent.jobs.prep_data.outputs.train_data}}
@@ -49,22 +49,21 @@ jobs:
     outputs:
       model_output:
         type: mlflow_model
-    sampling_algorithm: random    # Specify the sampling algorithm
-    trial:  # Proper trial definition
-      component: ../../../data-science/src/train.yml    # Refers to a separate command component
+    sampling_algorithm: random  # Specify the sampling algorithm
+    trial: ../../../data-science/src/train.yml  # Refers to a separate command component
     search_space:
       n_estimators:
         type: choice
         values: [10, 20, 30, 50]
       max_depth:
         type: choice  # Specify the type for max_depth
-        values: [5, 10, 15, None]  # Provide the values for max_depth
+        values: [5, 10, 15, None]   # Provide the values for max_depth
     objective:
       goal: minimize
       primary_metric: MSE
     limits:
       max_total_trials: 20
-      max_concurrent_trials: 4
+      max_concurrent_trials: 10
       timeout: 7200
 
 
