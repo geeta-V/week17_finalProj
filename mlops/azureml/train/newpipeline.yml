@@ -50,13 +50,7 @@ jobs:
       model_output:
         type: mlflow_model
     sampling_algorithm: random    # Specify the sampling algorithm
-    trial: ../../../data-science/src/train.yml   # Refers to a separate command component
-    command: >-
-        python train.py  # The training script for each trial
-        --train_data ${{inputs.train_data}}
-        --test_data ${{inputs.test_data}}
-        --model_output ${{outputs.model_output}}
-    environment: azureml:used-cars-train-env@latest
+    trial: ./train.yml   # Refers to a separate command component
     search_space:
       n_estimators:
         type: choice
