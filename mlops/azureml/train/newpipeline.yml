@@ -50,14 +50,14 @@ jobs:
       model_output:
         type: mlflow_model
     sampling_algorithm: random    # Specify the sampling algorithm
-    trial: ./train.yml  # Refers to a separate command component
+    trial: /mlops/azureml/train.yml  # Refers to a separate command component
     search_space:
       n_estimators:
         type: choice
         values: [10, 20, 30, 50]
       max_depth:
         type: choice  # Specify the type for max_depth
-        values: [5, 10, 15, None]  # Provide the values for max_depth
+        values: [5, 10, 15, -1]  # Provide the values for max_depth
     objective:
       goal: minimize
       primary_metric: MSE
