@@ -50,7 +50,14 @@ jobs:
       model_output:
         type: uri_folder
     sampling_algorithm: random    # Specify the sampling algorithm
-    trial: ../../../data-science/src/train.yml   # Refers to a separate command component
+    trial: command   # Refers to a separate command component
+    code: ../../../data-science/src  # Specify the location of the training script
+      command: >-
+        python train.py  # The training script for each trial
+        --train_data ${{inputs.train_data}}
+        --test_data ${{inputs.test_data}}
+        --model_output ${{outputs.model_output}}
+      environment: azureml:used-cars-train-env@latest
     search_space:
       n_estimators:
         type: choice
