@@ -4,6 +4,7 @@ import mlflow
 import argparse
 import os
 import pandas as pd
+from pathlib import Path  # Fixes NameError
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
@@ -25,13 +26,22 @@ def parse_args():
     args = parser.parse_args()
 
     return args
+def select_first_file(path):
+    """Selects the first file in a folder, assuming there's only one file.
+    Args:
+        path (str): Path to the directory or file to choose.
+    Returns:
+        str: Full path of the selected file.
+    """
+    files = os.listdir(path)
+    return os.path.join(path, files[0])
 
 def main(args):
     '''Read train and test datasets, train model, evaluate model, save trained model'''
 
     # Load datasets
-    train_df = pd.read_csv(Path(args.train_data)/"train.csv")
-    test_df = pd.read_csv(Path(args.test_data)/"test.csv")
+    train_df = pd.read_csv(select_first_file(args.train_data))
+    test_df = pd.read_csv(select_first_file(args.test_data))
 
     # Split the data into ______(X) and ______(y) 
     y_train = train_df['price']  # Specify the target column
