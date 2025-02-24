@@ -59,7 +59,7 @@ def main(args):
 
     # Write model info 
     model_info = {
-        "id": f"{args.model_name}:{mlflow_model.version}",
+        "id": f"{args.model_name}:{model_version}",
         "uri": mlflow_model.source
     }
     output_path = os.path.join(output_dir, "model_info.json")
