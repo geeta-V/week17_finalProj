@@ -3,6 +3,7 @@ import os
 import argparse
 import logging
 import mlflow
+import json
 import pandas as pd
 from pathlib import Path
 from mlflow.tracking import MlflowClient
@@ -51,8 +52,10 @@ def main(args):
     # Register model
     mlflow_model = mlflow.register_model(model_uri, args.model_name)
     model_version = mlflow_model.version
+
     # Create output path
-    os.makedirs(args.model_info_output_path, exist_ok=True) 
+    output_dir = "./outputs"  # Azure ML automatically creates this writable directory
+    os.makedirs(output_dir, exist_ok=True)  # This is now safe 
 
     # Write model info
     print("Writing JSON")
@@ -60,24 +63,21 @@ def main(args):
         "id": f"{args.model_name}:{model_version.version}",
         "uri": model_version.source
     }
-    output_path = os.path.join(args.model_info_output_path, "model_info.json")
+    output_path = os.path.join(output_dir, "model_info.json")
     with open(output_path, "w") as of:
         json.dump(model_info, of)
 
 if __name__ == "__main__":
     
-    mlflow.start_run()
+    with mlflow.start_run():
     
     # Parse Arguments
     args = parse_args()
     
-    lines = [
-        f"Model name: {args.model_name}",
-        f"Model path: {args.model_path}",
-        f"Model info output path: {args.model_info_output_path}"
-    ]
-
-    for line in lines:
-        print(line)
+    print("\n".join([
+            f"Model name: {args.model_name}",
+            f"Model path: {args.model_path}",
+            f"Model info output path: {args.model_info_output_path}"
+    ]))
 
     main(args)
