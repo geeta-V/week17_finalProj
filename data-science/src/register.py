@@ -61,7 +61,7 @@ def main(args):
     print("Writing JSON")
     model_info = {
         "id": f"{args.model_name}:{model_version.version}",
-        "uri": model_version.source
+        "uri": mlflow_model.source
     }
     output_path = os.path.join(output_dir, "model_info.json")
     with open(output_path, "w") as of:
@@ -69,10 +69,8 @@ def main(args):
 
 if __name__ == "__main__":
     
-    with mlflow.start_run():
-    
-        # Parse Arguments
-        args = parse_args()
+    with mlflow.start_run():  
+        args = parse_args()  # Parse Arguments
     
         print("\n".join([
                 f"Model name: {args.model_name}",
