@@ -26,8 +26,8 @@ def main(args):
     df = pd.read_csv(args.data)  
 
     # Encode categorical feature
-    le = LabelEncoder()
-    df['Segment'] = le.fit_transform(df['Segment'])  # Write code to encode the categorical feature  
+    #le = LabelEncoder()
+    #df['Segment'] = le.fit_transform(df['Segment'])  # Write code to encode the categorical feature  
 
     # Split Data into train and test datasets
     train_df, test_df = train_test_split(df, test_size=args.test_train_ratio, random_state=42)
