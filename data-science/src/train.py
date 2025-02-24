@@ -26,16 +26,6 @@ def parse_args():
 
     return args
 
-def select_first_file(path):
-    """Selects the first file in a folder, assuming there's only one file.
-    Args:
-        path (str): Path to the directory or file to choose.
-    Returns:
-        str: Full path of the selected file.
-    """
-    files = os.listdir(path)
-    return os.path.join(path, files[0])
-
 def main(args):
     '''Read train and test datasets, train model, evaluate model, save trained model'''
 
