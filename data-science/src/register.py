@@ -57,13 +57,13 @@ def main(args):
     output_dir = "./outputs"  # Azure ML automatically creates this writable directory
     os.makedirs(output_dir, exist_ok=True)  # This is now safe 
 
-    # Write model info
-    print("Writing JSON")
+    # Write model info 
     model_info = {
-        "id": f"{args.model_name}:{model_version.version}",
+        "id": f"{args.model_name}:{mlflow_model.version}",
         "uri": mlflow_model.source
     }
     output_path = os.path.join(output_dir, "model_info.json")
+    print(f"Writing model info to {output_path}")
     with open(output_path, "w") as of:
         json.dump(model_info, of)
 
